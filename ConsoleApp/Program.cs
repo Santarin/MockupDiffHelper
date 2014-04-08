@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MockupDiffHelper.Downloader;
+﻿using MockupDiffHelper.Downloader;
 
 namespace ConsoleApp
 {
@@ -15,13 +10,14 @@ namespace ConsoleApp
         {
             _app = new App();
 
-            _app.TestDownloadMockup();
+            //_app.TestEthalonDownload();
+            _app.TestApplicantDownload();
         }
     }
 
     public class App
     {
-        public void TestDownloadMockup()
+        public void TestEthalonDownload()
         {
             var ethalonUrl = "file:///D:/PROJECTS/OSL-BW-Offshore/html-mockup/converted-html/index.html";
             var applicantUrl = string.Empty;
@@ -32,6 +28,19 @@ namespace ConsoleApp
             var helper = new Downloader(ethalonUrl, applicantUrl, dataFolderPath);
 
             helper.Download(ethalonUrl, downloadedDocumentPath);
+        }
+
+        public void TestApplicantDownload()
+        {
+            var ethalonUrl = string.Empty;
+            var applicantUrl = "http://bw.offshore.local/";
+            var dataFolderPath = @"D:\PROJECTS\MockupDiffHelper\Data\";
+
+            var downloadedDocumentPath = @"D:\PROJECTS\MockupDiffHelper\Data\BW.Offshore\FrontPage\Applicant\Original\index.html";
+
+            var helper = new Downloader(ethalonUrl, applicantUrl, dataFolderPath);
+
+            helper.Download(applicantUrl, downloadedDocumentPath);
         }
     }
 }
