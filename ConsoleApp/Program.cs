@@ -11,7 +11,7 @@ namespace ConsoleApp
             _app = new App();
 
             //_app.TestEthalonDownload();
-            _app.TestApplicantDownload();
+            //_app.TestApplicantDownload();
         }
     }
 
