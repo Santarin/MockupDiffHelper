@@ -1,4 +1,5 @@
-﻿using MockupDiffHelper.Downloader;
+﻿using MockupDiffHelper;
+using MockupDiffHelper.Downloader;
 
 namespace ConsoleApp
 {
@@ -12,6 +13,7 @@ namespace ConsoleApp
 
             //_app.TestEthalonDownload();
             //_app.TestApplicantDownload();
+            _app.TestEthalonFormatting();
         }
     }
 
@@ -41,6 +43,15 @@ namespace ConsoleApp
             var helper = new Downloader(ethalonUrl, applicantUrl, dataFolderPath);
 
             helper.Download(applicantUrl, downloadedDocumentPath);
+        }
+
+        public void TestEthalonFormatting()
+        {
+            var sourceFileName = @"D:\PROJECTS\MockupDiffHelper\Data\BW.Offshore\FrontPage\Ethalon\Original\index.html";
+            var destFileName = @"D:\PROJECTS\MockupDiffHelper\Data\BW.Offshore\FrontPage\Ethalon\Fixed\index.html";
+            var formatter = new Formatter();
+
+            formatter.TestEthalonFormatting(sourceFileName, destFileName);
         }
     }
 }

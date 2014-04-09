@@ -40,12 +40,17 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="TidyManaged, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\TidyManaged-extracted\TidyManaged.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Downloader\Downloader.cs" />
     <Compile Include="Downloader\ExtendedWebClient.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Formatter.cs" />
     <Compile Include="MockupDiffHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
