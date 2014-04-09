@@ -14,7 +14,8 @@ namespace ConsoleApp
             //_app.TestEthalonDownload();
             //_app.TestApplicantDownload();
             //_app.TestEthalonFormatting();
-            _app.TestApplicantFormatting();
+            //_app.TestApplicantFormatting();
+            _app.TestFilters();
         }
     }
 
@@ -62,6 +63,15 @@ namespace ConsoleApp
             var formatter = new Formatter();
 
             formatter.TestEthalonFormatting(sourceFileName, destFileName);
+        }
+
+        public void TestFilters()
+        {
+            var formatter = new Formatter();
+
+            var filePath = @"D:\PROJECTS\MockupDiffHelper\Data\BW.Offshore\FrontPage\Applicant\Fixed\index.html";
+
+            formatter.TestFilters(filePath);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
@@ -43,6 +44,29 @@ namespace MockupDiffHelper
 
                 tdoc.Save(fixedDocumentFilePath);
             }
+        }
+
+        public void TestFilters(string fixedFilePath)
+        {
+            var filter = "//ul[@class='nav nav-primary']";
+
+            var tempFileName = @"D:\PROJECTS\MockupDiffHelper\Data\BW.Offshore\FrontPage\Applicant\Fixed\index_filtered.html";
+
+            var document = new HtmlDocument();
+
+            document.Load(fixedFilePath);
+
+            var nodes = document.DocumentNode.SelectNodes(filter);
+
+            if (nodes != null)
+            {
+                foreach (var node in nodes)
+                {
+                    node.Remove();
+                }
+            }
+
+            document.Save(tempFileName);
         }
     }
 }
