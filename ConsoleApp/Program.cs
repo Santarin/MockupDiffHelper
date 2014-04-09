@@ -13,7 +13,8 @@ namespace ConsoleApp
 
             //_app.TestEthalonDownload();
             //_app.TestApplicantDownload();
-            _app.TestEthalonFormatting();
+            //_app.TestEthalonFormatting();
+            _app.TestApplicantFormatting();
         }
     }
 
@@ -49,6 +50,15 @@ namespace ConsoleApp
         {
             var sourceFileName = @"D:\PROJECTS\MockupDiffHelper\Data\BW.Offshore\FrontPage\Ethalon\Original\index.html";
             var destFileName = @"D:\PROJECTS\MockupDiffHelper\Data\BW.Offshore\FrontPage\Ethalon\Fixed\index.html";
+            var formatter = new Formatter();
+
+            formatter.TestEthalonFormatting(sourceFileName, destFileName);
+        }
+
+        public void TestApplicantFormatting()
+        {
+            var sourceFileName = @"D:\PROJECTS\MockupDiffHelper\Data\BW.Offshore\FrontPage\Applicant\Original\index.html";
+            var destFileName = @"D:\PROJECTS\MockupDiffHelper\Data\BW.Offshore\FrontPage\Applicant\Fixed\index.html";
             var formatter = new Formatter();
 
             formatter.TestEthalonFormatting(sourceFileName, destFileName);
