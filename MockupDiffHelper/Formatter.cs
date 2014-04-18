@@ -13,7 +13,7 @@ namespace MockupDiffHelper
 {
     public class Formatter
     {
-        public void TestEthalonFormatting(string originalFilePath, string fixedDocumentFilePath)
+        public void ApplyFormatting(string originalFilePath, string fixedDocumentFilePath)
         {
             var html = string.Empty;
 
@@ -40,33 +40,34 @@ namespace MockupDiffHelper
                 tdoc.AttributeSortType = SortStrategy.Alpha;
                 tdoc.WrapScriptLiterals = true;
 
+                //tdoc.NewInlineTags = "section, aside, header, nav, footer";
+                
                 tdoc.CleanAndRepair();
 
                 tdoc.Save(fixedDocumentFilePath);
             }
         }
 
-        public void TestFilters(string fixedFilePath)
+        public void ApplyFilters(string fixedFilePath, List<string> filters, string filteredFilePath)
         {
-            var filter = "//ul[@class='nav nav-primary']";
-
-            var tempFileName = @"D:\PROJECTS\MockupDiffHelper\Data\BW.Offshore\FrontPage\Applicant\Fixed\index_filtered.html";
-
             var document = new HtmlDocument();
 
             document.Load(fixedFilePath);
 
-            var nodes = document.DocumentNode.SelectNodes(filter);
-
-            if (nodes != null)
+            foreach (var filter in filters)
             {
-                foreach (var node in nodes)
+                var nodes = document.DocumentNode.SelectNodes(filter);
+
+                if (nodes != null)
                 {
-                    node.Remove();
+                    foreach (var node in nodes)
+                    {
+                        node.Remove();
+                    }
                 }
             }
 
-            document.Save(tempFileName);
+            document.Save(filteredFilePath);
         }
     }
 }

@@ -6,13 +6,13 @@ namespace MockupDiffHelper.Downloader
 {
     public class Downloader
     {
-        private string _ethalonUrl;
-        private string _applicantUrl;
+        /*private string _ethalonUrl;
+        private string _applicantUrl;*/
         
-        private string _dataFolderPath;
+        //private string _dataFolderPath;
         private int _timeout = 60000;
 
-        public string EthalonUrl
+/*        public string EthalonUrl
         {
             get { return _ethalonUrl; }
         }
@@ -20,22 +20,23 @@ namespace MockupDiffHelper.Downloader
         public string ApplicantUrl
         {
             get { return _applicantUrl; }
-        }
+        }*/
 
-        public string DataFolderPath
+        /*public string DataFolderPath
         {
             get { return _dataFolderPath; }
-        }
+        }*/
 
-        public Downloader(string ethalonUrl, string applicantUrl, string dataFolderPath)
-        {
-            // TODO: these paths should be configurable from UI
-            _ethalonUrl = ethalonUrl;
-            _applicantUrl = applicantUrl;
-            _dataFolderPath = dataFolderPath;
-
-            //_downloadedDocumentPath = Path.Combine(_dataFolderPath, Path.GetFileName(new Uri(_ethalonUrl).LocalPath));
-        }
+        /*public Downloader(string ethalonUrl, string applicantUrl, string dataFolderPath)*/
+//        public Downloader(string dataFolderPath)
+//        {
+//            // TODO: these paths should be configurable from UI
+//            /*_ethalonUrl = ethalonUrl;
+//            _applicantUrl = applicantUrl;*/
+//            //_dataFolderPath = dataFolderPath;
+//
+//            //_downloadedDocumentPath = Path.Combine(_dataFolderPath, Path.GetFileName(new Uri(_ethalonUrl).LocalPath));
+//        }
 
         public void Download(string url, string downloadedDocumentPath)
         {

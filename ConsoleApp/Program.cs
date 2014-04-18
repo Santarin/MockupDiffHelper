@@ -1,4 +1,5 @@
-﻿using MockupDiffHelper;
+﻿using System.Collections.Generic;
+using MockupDiffHelper;
 using MockupDiffHelper.Downloader;
 
 namespace ConsoleApp
@@ -29,7 +30,7 @@ namespace ConsoleApp
 
             var downloadedDocumentPath = @"D:\PROJECTS\MockupDiffHelper\Data\BW.Offshore\FrontPage\Ethalon\Original\index.html";
 
-            var helper = new Downloader(ethalonUrl, applicantUrl, dataFolderPath);
+            var helper = new Downloader();
 
             helper.Download(ethalonUrl, downloadedDocumentPath);
         }
@@ -42,7 +43,7 @@ namespace ConsoleApp
 
             var downloadedDocumentPath = @"D:\PROJECTS\MockupDiffHelper\Data\BW.Offshore\FrontPage\Applicant\Original\index.html";
 
-            var helper = new Downloader(ethalonUrl, applicantUrl, dataFolderPath);
+            var helper = new Downloader();
 
             helper.Download(applicantUrl, downloadedDocumentPath);
         }
@@ -53,7 +54,7 @@ namespace ConsoleApp
             var destFileName = @"D:\PROJECTS\MockupDiffHelper\Data\BW.Offshore\FrontPage\Ethalon\Fixed\index.html";
             var formatter = new Formatter();
 
-            formatter.TestEthalonFormatting(sourceFileName, destFileName);
+            formatter.ApplyFormatting(sourceFileName, destFileName);
         }
 
         public void TestApplicantFormatting()
@@ -62,7 +63,7 @@ namespace ConsoleApp
             var destFileName = @"D:\PROJECTS\MockupDiffHelper\Data\BW.Offshore\FrontPage\Applicant\Fixed\index.html";
             var formatter = new Formatter();
 
-            formatter.TestEthalonFormatting(sourceFileName, destFileName);
+            formatter.ApplyFormatting(sourceFileName, destFileName);
         }
 
         public void TestFilters()
@@ -70,8 +71,11 @@ namespace ConsoleApp
             var formatter = new Formatter();
 
             var filePath = @"D:\PROJECTS\MockupDiffHelper\Data\BW.Offshore\FrontPage\Applicant\Fixed\index.html";
+            var filteredFilePath =  @"D:\PROJECTS\MockupDiffHelper\Data\BW.Offshore\FrontPage\Applicant\Fixed\index_filtered.html";
 
-            formatter.TestFilters(filePath);
+            var filters = new List<string>();
+
+            formatter.ApplyFilters(filePath, filters, filteredFilePath);
         }
     }
 }

@@ -3,7 +3,7 @@
   <Name>BW.Offshore</Name>
   <Pages>
     <ProjectPageModel>
-      <Name>Front Page</Name>
+      <Name>Front_Page</Name>
       <MockupUrl>file:///D:/PROJECTS/OSL-BW-Offshore/html-mockup/converted-html/index.html</MockupUrl>
       <AppUrl>http://bw.offshore.local/</AppUrl>
       <Filters>
