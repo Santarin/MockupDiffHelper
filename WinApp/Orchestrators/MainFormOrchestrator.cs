@@ -1,8 +1,7 @@
-﻿using System.IO;
-using System.Text;
-using System.Xml.Serialization;
-using MockupDiffHelper;
+﻿using MockupDiffHelper;
 using MockupDiffHelper.Downloader;
+using System.IO;
+using System.Xml.Serialization;
 using WinApp.Models;
 
 namespace WinApp.Orchestrators
@@ -15,14 +14,8 @@ namespace WinApp.Orchestrators
 
         public string StoragePath
         {
-            // {0} - Project Name
-            // {1} - Page Name
-            // {2} - "Applicant" or "Etalon"
-            // {3} - "Fixed" or "Original"
-            // {4} - File name
             get
             {
-                //return @"D:\PROJECTS\MockupDiffHelper\Data\{0}\{1}\{2}\{3}\{4}";
                 return @"D:\PROJECTS\MockupDiffHelper\Data\";
             }
         }
@@ -31,9 +24,6 @@ namespace WinApp.Orchestrators
         {
             Formatter = new Formatter();
         }
-
-        private const string Applicant = "Applicant";
-        private const string Etalon = "Etalon";
 
         public bool LoadProject(string projectFilePath)
         {
@@ -108,9 +98,7 @@ namespace WinApp.Orchestrators
 
         public void FixFormatting(ProjectPageModel page, string sourceFilePath, string destinationFilePath)
         {
-            //var formatter = new Formatter();
-
-            Formatter.ApplyFormatting(sourceFilePath, destinationFilePath);
+            Formatter.ApplyHtmlAgilityPackFormating(sourceFilePath, destinationFilePath);
         }
 
         public void ApplyFilters(ProjectPageModel page, string sourceFilePath, string filteredFilePath)

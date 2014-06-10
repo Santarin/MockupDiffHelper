@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 using System.Windows.Forms;
 using WinApp.Models;
 using WinApp.Orchestrators;
@@ -41,41 +42,9 @@ namespace WinApp
             var projectLoaded = Orchestrator.LoadProject(filePath);
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            var project = new ProjectModel()
-            {
-                Name = "BW.Offshore",
-
-                Pages = new List<ProjectPageModel>()
-                {
-                    new ProjectPageModel
-                    {
-                        AppUrl = "http://bw.offshore.local/",
-                        MockupUrl = "file:///D:/PROJECTS/OSL-BW-Offshore/html-mockup/converted-html/index.html",
-                        Name = "Front Page",
-                        Filters = new List<string>
-                        {
-                            "//ul[@class='nav nav-primary']"
-                        }
-                    },
-                    new ProjectPageModel
-                    {
-                        AppUrl = "http://bw.offshore.local/articles-list/article-11/",
-                        MockupUrl = "file:///D:/PROJECTS/OSL-BW-Offshore/html-mockup/converted-html/article.html",
-                        Name = "Article"
-                    }
-                }
-            };
-
-            var filePath = @"D:\PROJECTS\MockupDiffHelper\WinApp\Data\ProjectConfig1.xml";
-
-            Orchestrator.SaveProject(filePath, project);
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
-            var filePath = @"D:\PROJECTS\MockupDiffHelper\WinApp\Data\ProjectConfig1.xml";
+            var filePath = @"D:\PROJECTS\MockupDiffHelper\WinApp\Data\ProjectConfig.xml";
 
             var projectLoaded = Orchestrator.LoadProject(filePath);
 
@@ -89,20 +58,36 @@ namespace WinApp
                 var applicationFilePath = Orchestrator.GetPageLocalPath(page, PageToCompareType.Applicant, ModificationType.Etalon, "index.html");
 
                 // download files
-                Orchestrator.Download(page.MockupUrl, mockupFilePath);
-                Orchestrator.Download(page.AppUrl, applicationFilePath);
+                var bothFilesAreDownloaded = false;
+                try
+                {
+                    Orchestrator.Download(page.MockupUrl, mockupFilePath);
+                    Orchestrator.Download(page.AppUrl, applicationFilePath);
 
-                // fix formatting
+                    bothFilesAreDownloaded = true;
+                }
+                catch (WebException ex)
+                {
+                    bothFilesAreDownloaded = false;
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                if (!bothFilesAreDownloaded)
+                {
+                    return;
+                }
+
                 var fixedMockupFilePath = Orchestrator.GetPageLocalPath(page, PageToCompareType.Etalon, ModificationType.Fixed, "index.html");
                 var fixedApplicationFilePath = Orchestrator.GetPageLocalPath(page, PageToCompareType.Applicant, ModificationType.Fixed, "index.html");
 
+                var filteredMockupFilePath = Orchestrator.GetPageLocalPath(page, PageToCompareType.Etalon, ModificationType.Fixed, "filtered.html");
+                var filteredApplicationFilePath = Orchestrator.GetPageLocalPath(page, PageToCompareType.Applicant, ModificationType.Fixed, "filtered.html");
+
+                // fix formatting
                 Orchestrator.FixFormatting(page, mockupFilePath, fixedMockupFilePath);
                 Orchestrator.FixFormatting(page, applicationFilePath, fixedApplicationFilePath);
 
                 // apply filters
-                var filteredMockupFilePath = Orchestrator.GetPageLocalPath(page, PageToCompareType.Etalon, ModificationType.Fixed, "filtered.html");
-                var filteredApplicationFilePath = Orchestrator.GetPageLocalPath(page, PageToCompareType.Applicant, ModificationType.Fixed, "filtered.html");
-
                 Orchestrator.ApplyFilters(page, fixedMockupFilePath, filteredMockupFilePath);
                 Orchestrator.ApplyFilters(page, fixedApplicationFilePath, filteredApplicationFilePath);
 

@@ -1,7 +1,40 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<project Name="BW.Offshore">
-    <pages>
-        <page name="Front Page" mockupUrl="file:///D:/PROJECTS/OSL-BW-Offshore/html-mockup/converted-html/index.html" appUrl="http://bw.offshore.local/"/>
-        <page name="Article" mockupUrl="file:///D:/PROJECTS/OSL-BW-Offshore/html-mockup/converted-html/article.html" appUrl="http://bw.offshore.local/articles-list/article-11/"/>
-    </pages>
-</project>
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <!--
+  <Name>BW.Offshore</Name>
+  <Pages>
+    <ProjectPageModel>
+      <Name>Front_Page</Name>
+      <MockupUrl>file:///C:/PROJECTS/OSL-BW-Offshore/html-mockup/converted-html/index.html</MockupUrl>
+      <AppUrl>http://bw.offshore.local/</AppUrl>
+      <Filters>
+        <string>//script</string>
+        <string>//footer</string>
+        <string>//head</string>
+        <string>//div[@class='snap-drawers']</string>
+        <string>//header</string>
+      </Filters>
+    </ProjectPageModel>
+    <ProjectPageModel>
+      <Name>Article</Name>
+      <MockupUrl>file:///C:/PROJECTS/OSL-BW-Offshore/html-mockup/converted-html/article.html</MockupUrl>
+      <AppUrl>http://bw.offshore.local/articles-list/article-11/</AppUrl>
+    </ProjectPageModel>
+  </Pages>-->
+    <Name>ResourceEditor</Name>
+    <Pages>
+        <ProjectPageModel>
+            <Name>Index</Name>
+            <MockupUrl>file:///C:/Projects/OSL-Creuna.ResourceEditor/Mockup/index.html</MockupUrl>
+            <AppUrl>http://localhost:61202/</AppUrl>
+            <Filters>
+                <string>//head</string>
+                <string>//div[@class='footer']</string>
+                <string>//div[@class='cf results']</string>
+                <string>//div[@class='cf search-row']</string>
+                <string>//div[@class='content container']</string>
+                <string>//script</string>
+            </Filters>
+        </ProjectPageModel>
+    </Pages>
+</ProjectModel>
