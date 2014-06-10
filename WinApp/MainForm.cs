@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Net;
 using System.Windows.Forms;
 using WinApp.Models;
 using WinApp.Orchestrators;
@@ -12,87 +10,89 @@ namespace WinApp
     {
         private MainFormOrchestrator Orchestrator { get; set; }
 
+        private bool _projectIsLoaded = false;
+
         public MainForm()
         {
             InitializeComponent();
 
             Orchestrator = new MainFormOrchestrator();
+
+            ModifyUI();
         }
 
         private void openProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            /*var dialogResult = openProjectFileDialog.ShowDialog();
-
-            if (dialogResult == DialogResult.OK)
+            if (openProjectFileDialog.ShowDialog() == DialogResult.OK)
             {
-                var filePath = openProjectFileDialog.FileName;
+                _projectIsLoaded = Orchestrator.LoadProject(openProjectFileDialog.FileName);
+            }
 
-                filePath = @"D:\PROJECTS\MockupDiffHelper\WinApp\Data\ProjectConfig";
+            ModifyUI();
+        }
 
-                var projectLoaded = Orchestrator.LoadProject(filePath);
+        private void ModifyUI()
+        {
+            button2.Enabled = _projectIsLoaded;
+            chkDoNotReloadApp.Enabled = _projectIsLoaded;
+            chkDoNotReloadMockup.Enabled = _projectIsLoaded;
 
-                if (projectLoaded)
-                {
-                    // update UI
-                }
-            }*/
+            if (_projectIsLoaded)
+            {
+                Text = Orchestrator.CurrentProject.Name;
+            }
+            else
+            {
+                Text = "Please Load project";
+            }
+        }
 
-            var filePath = @"D:\PROJECTS\MockupDiffHelper\WinApp\Data\ProjectConfig1.xml";
+        private string TryApplyModificationsAndGetFileToMergePath(ProjectPageModel page, PageTypeToCompare pageCompareType, bool applyModifications)
+        {
+            var fileWithAppliedFiltersPath = Orchestrator.GetPageLocalPath(page, pageCompareType,
+                ModificationType.Fixed, "filtered.html");
 
-            var projectLoaded = Orchestrator.LoadProject(filePath);
+            if (applyModifications)
+            {
+                var ethalonFilePath = Orchestrator.GetPageLocalPath(page, pageCompareType,
+                    ModificationType.Original, "index.html");
+
+                Orchestrator.Download(page.GetUrl(pageCompareType), ethalonFilePath);
+
+                var fileWithFixedFormattingPath = Orchestrator.GetPageLocalPath(page, pageCompareType,
+                    ModificationType.Fixed, "index.html");
+
+                Orchestrator.FixFormatting(page, ethalonFilePath, fileWithFixedFormattingPath);
+
+                Orchestrator.ApplyFilters(page, fileWithFixedFormattingPath, fileWithAppliedFiltersPath);
+            }
+
+            return fileWithAppliedFiltersPath;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var filePath = @"D:\PROJECTS\MockupDiffHelper\WinApp\Data\ProjectConfig.xml";
-
-            var projectLoaded = Orchestrator.LoadProject(filePath);
-
-            if (projectLoaded)
+            if (_projectIsLoaded)
             {
-                // Let's compare [0] page - Front Page
                 var page = Orchestrator.CurrentProject.Pages[0];
 
-                // calculate local destination
-                var mockupFilePath = Orchestrator.GetPageLocalPath(page, PageToCompareType.Etalon, ModificationType.Etalon, "index.html");
-                var applicationFilePath = Orchestrator.GetPageLocalPath(page, PageToCompareType.Applicant, ModificationType.Etalon, "index.html");
-
-                // download files
-                var bothFilesAreDownloaded = false;
-                try
-                {
-                    Orchestrator.Download(page.MockupUrl, mockupFilePath);
-                    Orchestrator.Download(page.AppUrl, applicationFilePath);
-
-                    bothFilesAreDownloaded = true;
-                }
-                catch (WebException ex)
-                {
-                    bothFilesAreDownloaded = false;
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-                if (!bothFilesAreDownloaded)
-                {
-                    return;
-                }
-
-                var fixedMockupFilePath = Orchestrator.GetPageLocalPath(page, PageToCompareType.Etalon, ModificationType.Fixed, "index.html");
-                var fixedApplicationFilePath = Orchestrator.GetPageLocalPath(page, PageToCompareType.Applicant, ModificationType.Fixed, "index.html");
-
-                var filteredMockupFilePath = Orchestrator.GetPageLocalPath(page, PageToCompareType.Etalon, ModificationType.Fixed, "filtered.html");
-                var filteredApplicationFilePath = Orchestrator.GetPageLocalPath(page, PageToCompareType.Applicant, ModificationType.Fixed, "filtered.html");
-
-                // fix formatting
-                Orchestrator.FixFormatting(page, mockupFilePath, fixedMockupFilePath);
-                Orchestrator.FixFormatting(page, applicationFilePath, fixedApplicationFilePath);
-
-                // apply filters
-                Orchestrator.ApplyFilters(page, fixedMockupFilePath, filteredMockupFilePath);
-                Orchestrator.ApplyFilters(page, fixedApplicationFilePath, filteredApplicationFilePath);
+                var rightFilePath = TryApplyModificationsAndGetFileToMergePath(page, PageTypeToCompare.Mockup, !chkDoNotReloadMockup.Checked);
+                var leftFilePath = TryApplyModificationsAndGetFileToMergePath(page, PageTypeToCompare.App, !chkDoNotReloadApp.Checked);
 
                 // run Win Merge
-                var winMergeCommandArgs = string.Format("/e \"{0}\" \"{1}\"", filteredApplicationFilePath, filteredMockupFilePath);
+                TryShowDifference(leftFilePath, rightFilePath);
+            }
+            else
+            {
+                MessageBox.Show("Please load project file first", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void TryShowDifference(string leftFilePath, string rightFilePath)
+        {
+            if (!string.IsNullOrEmpty(leftFilePath) && !string.IsNullOrEmpty(rightFilePath))
+            {
+                var winMergeCommandArgs = string.Format("/e \"{0}\" \"{1}\"", leftFilePath, rightFilePath);
 
                 var startInfo = new ProcessStartInfo
                 {

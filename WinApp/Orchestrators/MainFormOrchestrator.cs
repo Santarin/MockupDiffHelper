@@ -47,7 +47,7 @@ namespace WinApp.Orchestrators
             }
         }
 
-        public string GetPageLocalPath(ProjectPageModel page, PageToCompareType pageType, ModificationType modification, string fileName)
+        public string GetPageLocalPath(ProjectPageModel page, PageTypeToCompare pageType, ModificationType modification, string fileName)
         {
             var path = StoragePath;
 
@@ -107,17 +107,15 @@ namespace WinApp.Orchestrators
         }
     }
 
-    public enum PageToCompareType
+    public enum PageTypeToCompare
     {
-        Unknown = 0,
-        Etalon = 1,
-        Applicant = 2
+        Mockup = 1,
+        App = 2
     }
 
     public enum ModificationType
     {
-        Unknown = 0,
-        Etalon = 1,
+        Original = 1,
         Fixed = 2
     }
 }

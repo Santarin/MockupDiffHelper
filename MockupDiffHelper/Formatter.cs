@@ -110,7 +110,8 @@ namespace MockupDiffHelper
                 tdoc.IndentAttributes = false;
                 tdoc.IndentCdata = true;
                 tdoc.AddVerticalSpace = false;
-                tdoc.WrapAt = 120;
+                //tdoc.WrapAt = 120;
+                tdoc.WrapAt = 0;
                 tdoc.AttributeSortType = SortStrategy.Alpha;
                 tdoc.WrapScriptLiterals = true;
 

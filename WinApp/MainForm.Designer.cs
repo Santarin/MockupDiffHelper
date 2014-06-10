@@ -33,6 +33,8 @@
             this.openProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openProjectFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.button2 = new System.Windows.Forms.Button();
+            this.chkDoNotReloadMockup = new System.Windows.Forms.CheckBox();
+            this.chkDoNotReloadApp = new System.Windows.Forms.CheckBox();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,7 +59,7 @@
             // openProjectToolStripMenuItem
             // 
             this.openProjectToolStripMenuItem.Name = "openProjectToolStripMenuItem";
-            this.openProjectToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.openProjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openProjectToolStripMenuItem.Text = "Open Project";
             this.openProjectToolStripMenuItem.Click += new System.EventHandler(this.openProjectToolStripMenuItem_Click);
             // 
@@ -68,6 +70,7 @@
             // 
             // button2
             // 
+            this.button2.Enabled = false;
             this.button2.Location = new System.Drawing.Point(180, 227);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(92, 23);
@@ -76,11 +79,35 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // chkDoNotReloadMockup
+            // 
+            this.chkDoNotReloadMockup.AutoSize = true;
+            this.chkDoNotReloadMockup.Enabled = false;
+            this.chkDoNotReloadMockup.Location = new System.Drawing.Point(12, 27);
+            this.chkDoNotReloadMockup.Name = "chkDoNotReloadMockup";
+            this.chkDoNotReloadMockup.Size = new System.Drawing.Size(131, 17);
+            this.chkDoNotReloadMockup.TabIndex = 3;
+            this.chkDoNotReloadMockup.Text = "Do not reload mockup";
+            this.chkDoNotReloadMockup.UseVisualStyleBackColor = true;
+            // 
+            // chkDoNotReloadApp
+            // 
+            this.chkDoNotReloadApp.AutoSize = true;
+            this.chkDoNotReloadApp.Enabled = false;
+            this.chkDoNotReloadApp.Location = new System.Drawing.Point(13, 51);
+            this.chkDoNotReloadApp.Name = "chkDoNotReloadApp";
+            this.chkDoNotReloadApp.Size = new System.Drawing.Size(111, 17);
+            this.chkDoNotReloadApp.TabIndex = 4;
+            this.chkDoNotReloadApp.Text = "Do not reload app";
+            this.chkDoNotReloadApp.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
+            this.Controls.Add(this.chkDoNotReloadApp);
+            this.Controls.Add(this.chkDoNotReloadMockup);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
@@ -100,5 +127,7 @@
         private System.Windows.Forms.ToolStripMenuItem openProjectToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openProjectFileDialog;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.CheckBox chkDoNotReloadMockup;
+        private System.Windows.Forms.CheckBox chkDoNotReloadApp;
     }
 }
